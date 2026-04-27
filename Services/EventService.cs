@@ -31,4 +31,14 @@ public class EventService: IEventService
         await _context.SaveChangesAsync();
         return newEvent;
     }
+
+    public async Task<bool> Edit(Guid id, Event editEvent)
+    {
+        var result = await _context.Events.FindAsync(id);
+        if (result == null) return false;
+        result.Name = editEvent.Name;
+        result.ArtistName = editEvent.ArtistName;
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }

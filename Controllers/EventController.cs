@@ -32,10 +32,16 @@ namespace ApiConcertHub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Event newEvent)
+        public async Task<IActionResult> Create(Event newEvent)
         {
             var created = await _eventService.Create(newEvent);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, newEvent);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(Guid id, Event editEvent)
+        {
+            return (await _eventService.Edit(id, editEvent)) ? Ok(true) : NotFound(false);
         }
     }
 }
