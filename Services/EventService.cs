@@ -41,4 +41,13 @@ public class EventService: IEventService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<int> ChangeStatus(Guid id)
+    {
+        var edit = await _context.Events.FindAsync(id);
+        if (edit == null) return -1;
+        edit.IsActive = (edit.IsActive == 1) ? 0 : 1;
+        await _context.SaveChangesAsync();
+        return edit.IsActive;
+    }
 }

@@ -39,9 +39,15 @@ namespace ApiConcertHub.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit(Guid id, Event editEvent)
+        public async Task<IActionResult> Edit(Guid id, Event editEvent) => (await _eventService.Edit(id, editEvent)) ? Ok(true) : NotFound(false);
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> ChangeStatus(Guid id)
         {
-            return (await _eventService.Edit(id, editEvent)) ? Ok(true) : NotFound(false);
+            var edit = await _eventService.ChangeStatus(id);
+            if (edit == -1) return NotFound();
+            var message = (edit == 1) ? "Active" : "Inactive";
+            return Ok(message);
         }
     }
 }
