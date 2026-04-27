@@ -19,4 +19,35 @@ public class EventService: IEventService
     {
         return await _context.Events.Where(e => e.IsActive == 1).ToListAsync();
     }
+
+    public async Task<Event> GetById(Guid id)
+    {
+        return await _context.Events.FindAsync(id);
+    }
+
+    public async Task<Event> Create(Event newEvent)
+    {
+        _context.Events.Add(newEvent);
+        await _context.SaveChangesAsync();
+        return newEvent;
+    }
+
+    public async Task<bool> Edit(Guid id, Event editEvent)
+    {
+        var result = await _context.Events.FindAsync(id);
+        if (result == null) return false;
+        result.Name = editEvent.Name;
+        result.ArtistName = editEvent.ArtistName;
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<int> ChangeStatus(Guid id)
+    {
+        var edit = await _context.Events.FindAsync(id);
+        if (edit == null) return -1;
+        edit.IsActive = (edit.IsActive == 1) ? 0 : 1;
+        await _context.SaveChangesAsync();
+        return edit.IsActive;
+    }
 }
