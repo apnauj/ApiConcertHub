@@ -9,5 +9,5 @@ public class Event
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public int IsActive { get; set; }
+    public int IsActive { get; set; } = 1;
 }

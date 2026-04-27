@@ -24,4 +24,11 @@ public class EventService: IEventService
     {
         return await _context.Events.FindAsync(id);
     }
+
+    public async Task<Event> Create(Event newEvent)
+    {
+        _context.Events.Add(newEvent);
+        await _context.SaveChangesAsync();
+        return newEvent;
+    }
 }
