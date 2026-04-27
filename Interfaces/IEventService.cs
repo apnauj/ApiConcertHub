@@ -5,4 +5,5 @@ namespace ApiConcertHub.Interfaces;
 public interface IEventService
 {
     Task <List<Event>> GetAll();
+    Task <Event> GetById(Guid id);
 }

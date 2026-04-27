@@ -19,4 +19,9 @@ public class EventService: IEventService
     {
         return await _context.Events.Where(e => e.IsActive == 1).ToListAsync();
     }
+
+    public async Task<Event> GetById(Guid id)
+    {
+        return await _context.Events.FindAsync(id);
+    }
 }

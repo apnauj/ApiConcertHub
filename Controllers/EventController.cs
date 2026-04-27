@@ -22,5 +22,12 @@ namespace ApiConcertHub.Controllers
 
         [HttpGet]
         public async Task <IActionResult> GetAll() => Ok(await _eventService.GetAll());
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _eventService.GetById(id);
+            return (result != null) ? Ok(result) : NotFound();
+        }
     }
 }
